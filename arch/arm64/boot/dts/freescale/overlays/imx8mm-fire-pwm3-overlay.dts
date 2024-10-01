@@ -1,0 +1,40 @@
+/*
+ * Copyright (C) 2021 - All Rights Reserved by 
+ * filename : imx8mm-fire-pwm3-overlay.dts
+ * brief : Device Tree overlay for ebf imx8mm pwm3 device
+ * author : embedfire
+ * date : 2021-08-01 
+ * version : A001
+ */
+
+
+/dts-v1/;
+/plugin/;
+
+#include "../imx8mm-pinfunc.h"
+#include "dt-bindings/gpio/gpio.h"
+#include "dt-bindings/clock/imx8mm-clock.h"
+
+
+
+/ {
+	fragment@0 {
+		target= <&pwm3>;
+        __overlay__{
+			pinctrl-names = "default";
+		    pinctrl-0 = <&pinctrl_pwm3>;
+		    status = "okay";
+		};
+	};
+
+	fragment@2 {
+		target= <&iomuxc>;
+		__overlay__{
+			pinctrl_pwm3: pwm3grp {
+				fsl,pins = <
+					MX8MM_IOMUXC_SPDIF_TX_PWM3_OUT             0x00000116
+				>;
+			};
+		};
+	};
+};
