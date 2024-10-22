@@ -222,7 +222,27 @@
 };
 
 
+&i2c4 {
+    clock-frequency = <400000>;
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_i2c4>;
+    status = "okay";
 
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    nfc@24 {
+        compatible = "nxp,pn532-i2c";
+        pinctrl-names = "default";
+        pinctrl-0 = <&pinctrl_pn532_irq>;
+        reg = <0x24>;
+        status = "okay";
+
+        irq-gpios = <&gpio1 0 GPIO_ACTIVE_HIGH>;
+        interrupt-parent = <&gpio1>;
+        interrupts = <1 IRQ_TYPE_EDGE_FALLING>;
+    };
+};
 
 
 &{/busfreq} {
@@ -531,15 +551,20 @@
                     MX8MM_IOMUXC_GPIO1_IO09_GPIO1_IO9               0x1d6
                 >;
             };
-            
-/*
-            pinctrl_i2c2: i2c2grp {
+
+        pinctrl_i2c4: i2c4grp {
                 fsl,pins = <
-                    MX8MM_IOMUXC_I2C2_SCL_I2C2_SCL                  0x400001c3
-                    MX8MM_IOMUXC_I2C2_SDA_I2C2_SDA                  0x400001c3
+                    MX8MM_IOMUXC_I2C4_SCL_I2C4_SCL           0x400001c3
+                    MX8MM_IOMUXC_I2C4_SDA_I2C4_SDA           0x400001c3
                 >;
-            };
-*/
+         };
+
+         pinctrl_pn532_irq: pn532_irq_grp {
+                fsl,pins = <
+                    MX8MM_IOMUXC_GPIO1_IO00_GPIO1_IO0               0x1d6
+                >;
+         };
+
             pinctrl_csi_pwn: csi_pwn_grp {
                 fsl,pins = <
                     MX8MM_IOMUXC_GPIO1_IO07_GPIO1_IO7               0x19
